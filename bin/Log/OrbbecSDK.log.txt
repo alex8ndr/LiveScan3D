@@ -1,0 +1,40 @@
+[11/26 18:38:05.431283][debug][88876][Context.cpp:30] Context creating, work_dir=C:\Users\alext\Cloud-Drive\Documents\McGill\Fall 2024\ECSE 458 - Capstone\LiveScan3D\bin
+[11/26 18:38:05.432591][debug][88876][Context.cpp:49] Config file version=1.1
+[11/26 18:38:05.433110][debug][88876][FrameBufferManager.cpp:23] Max global frame buffer size updated! size=2048.000MB
+[11/26 18:38:05.433149][info][88876][Context.cpp:68] Context created with config: default config!
+[11/26 18:38:05.433327][info][88876][Context.cpp:73] Work directory=C:\Users\alext\Cloud-Drive\Documents\McGill\Fall 2024\ECSE 458 - Capstone\LiveScan3D\bin, SDK version=v1.10.11-20240724-aeaa107e5
+[11/26 18:38:05.433409][debug][88876][DeviceManager.cpp:30] DeviceManager init ...
+[11/26 18:38:05.433422][info][88876][MfPal.cpp:105] createObPal: create WinPal!
+[11/26 18:38:05.433431][debug][88876][MfPal.cpp:110] WmfPal init ...
+[11/26 18:38:05.457965][debug][88876][MfPal.cpp:117] WmfPal created!
+[11/26 18:38:05.458000][debug][88876][DeviceManager.cpp:34] Enable USB Device Enumerator ...
+[11/26 18:38:05.483585][debug][88876][EnumeratorLibusb.cpp:321] queryDevicesInfo done!
+[11/26 18:38:05.483715][debug][88876][MfPal.cpp:216] Create WinEventDeviceWatcher!
+[11/26 18:38:05.483777][debug][88876][UsbDeviceEnumerator.cpp:78] No matched usb device found!
+[11/26 18:38:05.484018][info][88876][DeviceManager.cpp:15] Current found device(s): (0)
+[11/26 18:38:05.484030][debug][88876][DeviceManager.cpp:52] DeviceManager construct done!
+[11/26 18:38:05.484290][debug][88876][Context.cpp:81] Context destroying ...
+[11/26 18:38:05.484301][debug][88876][DeviceManager.cpp:56] DeviceManager destroy ...
+[11/26 18:38:05.484308][debug][88876][DeviceManager.cpp:64] DeviceManager Destructors done
+[11/26 18:38:05.489160][debug][88876][MfPal.cpp:128] WmfPal destroyed!
+[11/26 18:38:05.489547][info][88876][Context.cpp:84] Context destroyed
+[11/26 18:38:05.489895][debug][88876][Context.cpp:30] Context creating, work_dir=C:\Users\alext\Cloud-Drive\Documents\McGill\Fall 2024\ECSE 458 - Capstone\LiveScan3D\bin
+[11/26 18:38:05.489933][debug][88876][Context.cpp:49] Config file version=1.1
+[11/26 18:38:05.489946][debug][88876][FrameBufferManager.cpp:23] Max global frame buffer size updated! size=2048.000MB
+[11/26 18:38:05.489957][info][88876][Context.cpp:68] Context created with config: default config!
+[11/26 18:38:05.489964][info][88876][Context.cpp:73] Work directory=C:\Users\alext\Cloud-Drive\Documents\McGill\Fall 2024\ECSE 458 - Capstone\LiveScan3D\bin, SDK version=v1.10.11-20240724-aeaa107e5
+[11/26 18:38:05.489973][debug][88876][DeviceManager.cpp:30] DeviceManager init ...
+[11/26 18:38:05.489980][info][88876][MfPal.cpp:105] createObPal: create WinPal!
+[11/26 18:38:05.489986][debug][88876][MfPal.cpp:110] WmfPal init ...
+[11/26 18:38:05.509623][debug][88876][MfPal.cpp:117] WmfPal created!
+[11/26 18:38:05.509651][debug][88876][DeviceManager.cpp:34] Enable USB Device Enumerator ...
+[11/26 18:38:05.529533][debug][88876][EnumeratorLibusb.cpp:321] queryDevicesInfo done!
+[11/26 18:38:05.529672][debug][88876][MfPal.cpp:216] Create WinEventDeviceWatcher!
+[11/26 18:38:05.529738][debug][88876][UsbDeviceEnumerator.cpp:78] No matched usb device found!
+[11/26 18:38:05.529751][info][88876][DeviceManager.cpp:15] Current found device(s): (0)
+[11/26 18:38:05.529759][debug][88876][DeviceManager.cpp:52] DeviceManager construct done!
+[11/26 18:38:05.529772][debug][88876][Context.cpp:81] Context destroying ...
+[11/26 18:38:05.529778][debug][88876][DeviceManager.cpp:56] DeviceManager destroy ...
+[11/26 18:38:05.529784][debug][88876][DeviceManager.cpp:64] DeviceManager Destructors done
+[11/26 18:38:05.531994][debug][88876][MfPal.cpp:128] WmfPal destroyed!
+[11/26 18:38:05.532152][info][88876][Context.cpp:84] Context destroyed

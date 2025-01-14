@@ -43,9 +43,19 @@ bool AzureKinectCapture::Initialize(SYNC_STATE state, int syncOffsetMultiplier)
 	}
 
 	kinectSensor = NULL;
-	while (K4A_FAILED(k4a_device_open(deviceIdx, &kinectSensor)))
+	k4a_result_t result = k4a_device_open(deviceIdx, &kinectSensor);
+	while (result == K4A_RESULT_SUCCEEDED)
 	{
+		k4a_hardware_version_t version_info;
+		result = k4a_device_get_version(kinectSensor, &version_info);
+		if (result == K4A_RESULT_SUCCEEDED)
+		{
+			std::cout << "Device opened successfully at index: " << deviceIdx << std::endl;
+			break; // Device opened and valid
+		}
 		
+		std::cout << "Failed to open device at index: " << deviceIdx << std::endl;
+
 		if (deviceIDForRestart == -1) 
 		{
 			deviceIdx++;
@@ -55,25 +65,22 @@ bool AzureKinectCapture::Initialize(SYNC_STATE state, int syncOffsetMultiplier)
 				return bInitialized;
 			}
 		}
-
-		
-		else {
-
-			//Sometimes the cameras fail to reinitialize, so we try to initialize them three times with a slight delay before failing
+		else
+		{
 			if (restartAttempts > 2) 
 			{
 				bInitialized = false;
 				return bInitialized;
 			}
-
-			else {
-
+			else
+			{
 				restartAttempts++;
 				Sleep(200);
 			}
 			
 		}
 		
+		result = k4a_device_open(deviceIdx, &kinectSensor);
 	}
 
 	k4a_device_configuration_t config = K4A_DEVICE_CONFIG_INIT_DISABLE_ALL;
