@@ -67,9 +67,11 @@ namespace KinectServer
         //The live view window class
         OpenGLWindow oOpenGLWindow;
 
+        List<Process> liveScanClientProcesses = new List<Process>();
+
         public MainWindowForm()
         {
-            //This tries to read the settings from "settings.bin", if it failes the settings stay at default values.
+            //This tries to read the settings from "settings.bin", if it fails the settings stay at default values.
             try
             {
                 IFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
@@ -88,6 +90,23 @@ namespace KinectServer
             oTransferServer.lColors = lAllColors;
 
             InitializeComponent();
+
+            // Automatically start the server
+            oServer.StartServer();
+            oTransferServer.StartServer();
+            bServerRunning = true;
+            btStart.Text = "Stop server";
+
+            // Start multiple instances of LiveScanClient.exe in headless and autoconnect mode
+            for (int i = 0; i < 3; i++)
+            {
+                Process liveScanClientProcess = new Process();
+                liveScanClientProcess.StartInfo.FileName = "LiveScanClient.exe";
+                liveScanClientProcess.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory; // Set the working directory to the server's directory
+                liveScanClientProcess.StartInfo.Arguments = "--headless --autoconnect 127.0.0.1"; // Add the arguments for headless and autoconnect mode
+                liveScanClientProcess.Start();
+                liveScanClientProcesses.Add(liveScanClientProcess);
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -101,6 +120,15 @@ namespace KinectServer
 
             oServer.StopServer();
             oTransferServer.StopServer();
+
+            // Ensure all LiveScanClient processes are terminated
+            foreach (var process in liveScanClientProcesses)
+            {
+                if (!process.HasExited)
+                {
+                    process.Kill();
+                }
+            }
         }
 
         //Starts the server

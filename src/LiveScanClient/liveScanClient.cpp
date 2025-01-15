@@ -20,21 +20,44 @@
 #include <strsafe.h>
 #include <fstream>
 #include "zstd.h"
+#include <shellapi.h>
+
 
 std::mutex m_mSocketThreadMutex;
 
 int APIENTRY wWinMain(
 	_In_ HINSTANCE hInstance,
-    _In_opt_ HINSTANCE hPrevInstance,
-    _In_ LPWSTR lpCmdLine,
-    _In_ int nShowCmd
-    )
+	_In_opt_ HINSTANCE hPrevInstance,
+	_In_ LPWSTR lpCmdLine,
+	_In_ int nShowCmd
+)
 {
-    UNREFERENCED_PARAMETER(hPrevInstance);
-    UNREFERENCED_PARAMETER(lpCmdLine);
+	UNREFERENCED_PARAMETER(hPrevInstance);
+	UNREFERENCED_PARAMETER(lpCmdLine);
 
-    LiveScanClient application;
-    application.Run(hInstance, nShowCmd);
+	bool headless = false;
+	bool autoconnect = false;
+	std::wstring serverAddress;
+
+	// Parse command-line arguments
+	int argc;
+	LPWSTR* argv = CommandLineToArgvW(lpCmdLine, &argc);
+	for (int i = 0; i < argc; ++i)
+	{
+		if (wcscmp(argv[i], L"--headless") == 0)
+		{
+			headless = true;
+		}
+		else if (wcscmp(argv[i], L"--autoconnect") == 0 && i + 1 < argc)
+		{
+			autoconnect = true;
+			serverAddress = argv[++i];
+		}
+	}
+	LocalFree(argv);
+
+	LiveScanClient application;
+	application.Run(hInstance, nShowCmd, headless, autoconnect, serverAddress);
 }
 
 LiveScanClient::LiveScanClient() :
@@ -132,62 +155,86 @@ LiveScanClient::~LiveScanClient()
     SafeRelease(m_pD2DFactory);
 }
 
-int LiveScanClient::Run(HINSTANCE hInstance, int nCmdShow)
+int LiveScanClient::Run(HINSTANCE hInstance, int nCmdShow, bool headless, bool autoconnect, std::wstring serverAddress)
 {
-    MSG       msg = {0};
-    WNDCLASS  wc;
+	MSG       msg = { 0 };
+	WNDCLASS  wc;
+	HWND      hWndApp = NULL;
 
-	// Dialog custom window class
-    ZeroMemory(&wc, sizeof(wc));
-    wc.style         = CS_HREDRAW | CS_VREDRAW;
-    wc.cbWndExtra    = DLGWINDOWEXTRA;
-    wc.hCursor       = LoadCursorW(NULL, IDC_ARROW);
-    wc.hIcon         = LoadIconW(hInstance, MAKEINTRESOURCE(IDI_APP));
-    wc.lpfnWndProc   = DefDlgProcW;
-    wc.lpszClassName = L"LiveScanClientAppDlgWndClass";
+	if (!headless)
+	{
+		// Dialog custom window class
+		ZeroMemory(&wc, sizeof(wc));
+		wc.style = CS_HREDRAW | CS_VREDRAW;
+		wc.cbWndExtra = DLGWINDOWEXTRA;
+		wc.hCursor = LoadCursorW(NULL, IDC_ARROW);
+		wc.hIcon = LoadIconW(hInstance, MAKEINTRESOURCE(IDI_APP));
+		wc.lpfnWndProc = DefDlgProcW;
+		wc.lpszClassName = L"LiveScanClientAppDlgWndClass";
 
-    if (!RegisterClassW(&wc))
-    {
-        return 0;
-    }
+		if (!RegisterClassW(&wc))
+		{
+			return 0;
+		}
 
-    // Create main application window
-	HWND hWndApp = CreateDialogParamW(
-        NULL,
-        MAKEINTRESOURCE(IDD_APP),
-        NULL,
-        (DLGPROC)LiveScanClient::MessageRouter,
-        reinterpret_cast<LPARAM>(this));
+		// Create main application window
+		HWND hWndApp = CreateDialogParamW(
+			NULL,
+			MAKEINTRESOURCE(IDD_APP),
+			NULL,
+			(DLGPROC)LiveScanClient::MessageRouter,
+			reinterpret_cast<LPARAM>(this));
 
-    // Show window
-    ShowWindow(hWndApp, nCmdShow);
+		// Show window
+		ShowWindow(hWndApp, nCmdShow);
+	}
+
+	if (autoconnect)
+	{
+		std::lock_guard<std::mutex> lock(m_mSocketThreadMutex);
+		while (!m_bConnected)
+		{
+			try
+			{
+				m_pClientSocket = new SocketClient(std::string(serverAddress.begin(), serverAddress.end()), 48001);
+				m_bConnected = true;
+				if (calibration.bCalibrated)
+					m_bConfirmCalibrated = true;
+			}
+			catch (...)
+			{
+				SetStatusMessage(L"Failed to connect. Retrying...", 1000, true);
+				std::this_thread::sleep_for(std::chrono::seconds(1)); // Wait for 1 second before retrying
+			}
+		}
+	}
 
 	std::thread t1(&LiveScanClient::SocketThreadFunction, this);
-    // Main message loop
-    while (WM_QUIT != msg.message)
-    {
+	// Main message loop
+	while (WM_QUIT != msg.message)
+	{
 		UpdateFrame();
 
-        while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE))
-        {
+		while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE))
+		{
 			if (WM_QUIT == msg.message)
 			{
 				break;
 			}
-            // If a dialog message will be taken care of by the dialog proc
-            if (hWndApp && IsDialogMessageW(hWndApp, &msg))
-            {
-                continue;
-            }
+			// If a dialog message will be taken care of by the dialog proc
+			if (!headless && hWndApp && IsDialogMessageW(hWndApp, &msg))
+			{
+				continue;
+			}
 
-            TranslateMessage(&msg);
-            DispatchMessageW(&msg);
-        }
-    }
+			TranslateMessage(&msg);
+			DispatchMessageW(&msg);
+		}
+	}
 
 	m_bSocketThread = false;
 	t1.join();
-    return static_cast<int>(msg.wParam);
+	return static_cast<int>(msg.wParam);
 }
 
 void LiveScanClient::UpdateFrame()
