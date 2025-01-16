@@ -258,18 +258,25 @@ bool AzureKinectCapture::AcquireFrame()
 		return false;
 	}
 
-	//We need to resize the color image, so that it's height fits the depth camera height, while preserving the aspect ratio of the color camera:
+	if (colorImage == NULL || depthImage == NULL)
+	{
+		k4a_capture_release(capture);
+		return false;
+	}
 
-	//Convert the k4a_image to an OpenCV Mat
+	// Convert the k4a_image to an OpenCV Mat
 	cv::Mat cImg = cv::Mat(k4a_image_get_height_pixels(colorImage), k4a_image_get_width_pixels(colorImage), CV_8UC4, k4a_image_get_buffer(colorImage));
 
-	//Resize the k4a_image to the precalculated size. Takes quite along time, maybe there is a faster algorithm?
+	// Save the raw RGB frame to a file with client ID
+	std::string fileName = "rgb_frame_" + std::to_string(deviceIDForRestart) + ".png";
+	cv::imwrite(fileName, cImg);
+
+	// Resize the k4a_image to the precalculated size. Takes quite a long time, maybe there is a faster algorithm?
 	cv::resize(cImg, cImg, cv::Size(colorImageDownscaledWidth, colorImageDownscaledHeight), cv::INTER_LINEAR);
 
-	//Create a k4a_image from the resized OpenCV Mat. Code taken from here: https://github.com/microsoft/Azure-Kinect-Sensor-SDK/issues/978#issuecomment-566002061
+	// Create a k4a_image from the resized OpenCV Mat. Code taken from here: https://github.com/microsoft/Azure-Kinect-Sensor-SDK/issues/978#issuecomment-566002061
 	k4a_image_create(K4A_IMAGE_FORMAT_COLOR_BGRA32, cImg.cols, cImg.rows, cImg.cols * 4 * (int)sizeof(uint8_t), &colorImageDownscaled);
 	memcpy(k4a_image_get_buffer(colorImageDownscaled), &cImg.ptr<cv::Vec4b>(0)[0], cImg.rows * cImg.cols * sizeof(cv::Vec4b));
-
 
 	if (pColorRGBX == NULL)
 	{
