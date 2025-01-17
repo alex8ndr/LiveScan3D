@@ -48,8 +48,8 @@
             // 
             // btCalibrate
             // 
-            this.btCalibrate.Location = new System.Drawing.Point(13, 92);
-            this.btCalibrate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btCalibrate.Location = new System.Drawing.Point(13, 83);
+            this.btCalibrate.Margin = new System.Windows.Forms.Padding(4);
             this.btCalibrate.Name = "btCalibrate";
             this.btCalibrate.Size = new System.Drawing.Size(127, 28);
             this.btCalibrate.TabIndex = 2;
@@ -59,8 +59,8 @@
             // 
             // btRecord
             // 
-            this.btRecord.Location = new System.Drawing.Point(319, 49);
-            this.btRecord.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btRecord.Location = new System.Drawing.Point(340, 119);
+            this.btRecord.Margin = new System.Windows.Forms.Padding(4);
             this.btRecord.Name = "btRecord";
             this.btRecord.Size = new System.Drawing.Size(127, 28);
             this.btRecord.TabIndex = 4;
@@ -74,9 +74,9 @@
             this.lClientListBox.HorizontalScrollbar = true;
             this.lClientListBox.ItemHeight = 16;
             this.lClientListBox.Location = new System.Drawing.Point(13, 13);
-            this.lClientListBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lClientListBox.Margin = new System.Windows.Forms.Padding(4);
             this.lClientListBox.Name = "lClientListBox";
-            this.lClientListBox.Size = new System.Drawing.Size(298, 68);
+            this.lClientListBox.Size = new System.Drawing.Size(307, 52);
             this.lClientListBox.TabIndex = 5;
             this.lClientListBox.SelectedIndexChanged += new System.EventHandler(this.lClientListBox_SelectedIndexChanged);
             // 
@@ -85,10 +85,10 @@
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 166);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 171);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(459, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(483, 22);
             this.statusStrip1.TabIndex = 6;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -105,8 +105,8 @@
             // 
             // txtSeqName
             // 
-            this.txtSeqName.Location = new System.Drawing.Point(319, 113);
-            this.txtSeqName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSeqName.Location = new System.Drawing.Point(343, 89);
+            this.txtSeqName.Margin = new System.Windows.Forms.Padding(4);
             this.txtSeqName.MaxLength = 40;
             this.txtSeqName.Name = "txtSeqName";
             this.txtSeqName.Size = new System.Drawing.Size(123, 22);
@@ -115,8 +115,8 @@
             // 
             // btRefineCalib
             // 
-            this.btRefineCalib.Location = new System.Drawing.Point(13, 128);
-            this.btRefineCalib.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btRefineCalib.Location = new System.Drawing.Point(13, 119);
+            this.btRefineCalib.Margin = new System.Windows.Forms.Padding(4);
             this.btRefineCalib.Name = "btRefineCalib";
             this.btRefineCalib.Size = new System.Drawing.Size(127, 28);
             this.btRefineCalib.TabIndex = 11;
@@ -142,8 +142,8 @@
             // 
             // btShowLive
             // 
-            this.btShowLive.Location = new System.Drawing.Point(148, 92);
-            this.btShowLive.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btShowLive.Location = new System.Drawing.Point(157, 83);
+            this.btShowLive.Margin = new System.Windows.Forms.Padding(4);
             this.btShowLive.Name = "btShowLive";
             this.btShowLive.Size = new System.Drawing.Size(163, 64);
             this.btShowLive.TabIndex = 12;
@@ -153,8 +153,8 @@
             // 
             // btSettings
             // 
-            this.btSettings.Location = new System.Drawing.Point(319, 13);
-            this.btSettings.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btSettings.Location = new System.Drawing.Point(340, 13);
+            this.btSettings.Margin = new System.Windows.Forms.Padding(4);
             this.btSettings.Name = "btSettings";
             this.btSettings.Size = new System.Drawing.Size(127, 28);
             this.btSettings.TabIndex = 13;
@@ -170,7 +170,7 @@
             // lbSeqName
             // 
             this.lbSeqName.AutoSize = true;
-            this.lbSeqName.Location = new System.Drawing.Point(328, 92);
+            this.lbSeqName.Location = new System.Drawing.Point(349, 66);
             this.lbSeqName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbSeqName.Name = "lbSeqName";
             this.lbSeqName.Size = new System.Drawing.Size(109, 16);
@@ -182,7 +182,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(459, 188);
+            this.ClientSize = new System.Drawing.Size(483, 193);
             this.Controls.Add(this.lbSeqName);
             this.Controls.Add(this.btSettings);
             this.Controls.Add(this.btShowLive);
@@ -193,7 +193,7 @@
             this.Controls.Add(this.btRecord);
             this.Controls.Add(this.btCalibrate);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "MainWindowForm";
             this.Text = "LiveScanServer";
