@@ -161,7 +161,7 @@ int LiveScanClient::Run(HINSTANCE hInstance, int nCmdShow, bool headless, bool a
 	WNDCLASS  wc;
 	HWND      hWndApp = NULL;
 
-	if (!headless)
+	if (true)
 	{
 		// Dialog custom window class
 		ZeroMemory(&wc, sizeof(wc));
@@ -186,7 +186,7 @@ int LiveScanClient::Run(HINSTANCE hInstance, int nCmdShow, bool headless, bool a
 			reinterpret_cast<LPARAM>(this));
 
 		// Show window
-		ShowWindow(hWndApp, nCmdShow);
+		if (!headless) ShowWindow(hWndApp, nCmdShow);
 	}
 
 	if (autoconnect)
