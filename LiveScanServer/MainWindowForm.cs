@@ -95,7 +95,7 @@ namespace KinectServer
             oServer.StartServer();
             oTransferServer.StartServer();
             bServerRunning = true;
-            btStart.Text = "Stop server";
+            //btStart.Text = "Stop server";
 
             // Start multiple instances of LiveScanClient.exe in headless and autoconnect mode
             for (int i = 0; i < 3; i++)
@@ -140,13 +140,13 @@ namespace KinectServer
             {
                 oServer.StartServer();
                 oTransferServer.StartServer();
-                btStart.Text = "Stop server";
+                //btStart.Text = "Stop server";
             }
             else
             {
                 oServer.StopServer();
                 oTransferServer.StopServer();
-                btStart.Text = "Start server";
+                //btStart.Text = "Start server";
             }
         }
 
@@ -538,6 +538,16 @@ namespace KinectServer
 
 
             lClientListBox.DataSource = listBoxItems;
+        }
+
+        private void lbSeqName_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lClientListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
